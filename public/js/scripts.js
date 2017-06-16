@@ -48,13 +48,13 @@ $(function() {
     // options for map
     // https://developers.google.com/maps/documentation/javascript/reference#MapOptions
     var options = {
-        center: {lat: 37.4236, lng: -122.1619}, // Stanford, California
+        center: {lat: 28.644800, lng: 77.216721}, // New Delhi
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         maxZoom: 14,
         panControl: true,
         styles: styles,
-        zoom: 13,
+        zoom: 10,
         zoomControl: true
     };
 

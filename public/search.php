@@ -20,7 +20,7 @@
             $places[] = [
                 "id" => $row["id"],
                 "country_code" =>  $row["country_code"],
-                "postal_code"  =>  $row["postal_code"] ,
+                "postal_code"  =>  $row["postal_code"],
                 "place_name"   =>  $row["place_name"],
                 "admin_name1"  =>  $row["admin_name1"],
                 "admin_code1"  =>  $row["admin_code1"],
