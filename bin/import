@@ -2,5 +2,47 @@
 <?php
 
     // TODO
+    // check if user has provided the file
+    if ($argc != 2)
+    {
+        print("Usage: ./import /path/to/file.txt\n");
+        exit(1);
+    }
+    
+    // store the file name provided
+    $filename = $argv[1];
 
+    // check file existence
+    if (!file_exists($filename))
+    {
+        print("Provide a valid file path...\n");
+        exit(1);
+    }
+    
+    // check file readability
+    if (!is_readable($filename))
+    {
+        print("File cannot be read!!\n");
+        exit(1);
+    }
+    
+    // open the file
+    $handle = fopen($filename, "r");
+    if ($handle == false)
+    {
+        print("File could not be opened.\n");
+        exit(1);
+    }
+    $row = 1;
+    while (($data = fgetcsv($handle, 1000, "\t")) !== FALSE) {
+        $num = count($data);
+        print($num . " fields in line " . $row . ":\n");
+        $row++;
+        for ($c=0; $c < $num; $c++) {
+            print( $data[$c] . "\n");
+        }
+    }
+
+    // close the file
+    fclose($handle);
 ?>

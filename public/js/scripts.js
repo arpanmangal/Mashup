@@ -58,6 +58,8 @@ $(function() {
         zoomControl: true
     };
 
+    // $("#map-canvas") returns a jQuery object (that has a whole bunch of functionality built-in)
+    // $("#map-canvas").get(0) returns the actual, underlying DOM node that jQuery is just wrapping
     // get DOM node in which map will be instantiated
     var canvas = $("#map-canvas").get(0);
 
