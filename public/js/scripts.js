@@ -79,14 +79,12 @@ function addMarker(place)
     // TODO
     var long = parseFloat(place.longitude);
     var lat = parseFloat(place.latitude);
-    var location = { lat: lat, lng: long };
- //   var data = JSON.parse(place);
     var marker = new google.maps.Marker({
-        position: location,//{lat: 28.644800, lng: 77.216721},//{lat: 28.644800, lng: 77.216721},//{lat: place["latitude"], lng: place["longitude"]},
+        position: { lat: lat, lng: long },
         map: map,
-        title: 'Hello World!'
+        title: place.place_name
     });
-  //  marker.setMap(map);
+    markers.push(marker);
 }
 
 /**
@@ -175,6 +173,19 @@ function hideInfo()
 function removeMarkers()
 {
     // TODO
+    // Get the number of markers
+    var length = markers.length;
+    
+    while (markers.length)
+    {
+        // remove marker from map
+        markers[markers.length - 1].setMap(null);
+        
+        // remove the marker itself
+        markers.pop();
+    }
+    // for debugging
+    // alert(length);
 }
 
 /**
