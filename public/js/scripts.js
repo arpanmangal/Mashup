@@ -110,7 +110,10 @@ function configure()
         source: search,
         templates: {
             empty: "no places found yet",
-            suggestion: _.template("<p>TODO</p>")
+            suggestion: _.template("<p style='background-color: #f0ffff'>" +
+                                    "<span style='color: rgba(255, 153, 51, .8)'><%- place_name %>,</span> " +
+                                    "<span style='color: rgba(0, 0, 128, .5)'><%- admin_name1 %></span>  " + 
+                                    "<span style='color: rgba(19, 136, 8, .34)'><%- postal_code %></span></p>")
         }
     });
 
