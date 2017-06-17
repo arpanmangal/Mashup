@@ -77,11 +77,12 @@ $(function() {
 function addMarker(place)
 {
     // TODO
-    var long = place.longitude;
-    alert(long);
+    var long = parseFloat(place.longitude);
+    var lat = parseFloat(place.latitude);
+    var location = { lat: lat, lng: long };
  //   var data = JSON.parse(place);
     var marker = new google.maps.Marker({
-        position: {lat: 28.644800, lng: long},//{lat: 28.644800, lng: 77.216721},//{lat: place["latitude"], lng: place["longitude"]},
+        position: location,//{lat: 28.644800, lng: 77.216721},//{lat: 28.644800, lng: 77.216721},//{lat: place["latitude"], lng: place["longitude"]},
         map: map,
         title: 'Hello World!'
     });
