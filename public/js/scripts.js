@@ -91,21 +91,47 @@ function addMarker(place)
                         "<span style='color: rgba(0, 0, 128)'>" + place.admin_name1 + "</span>  " + 
                         "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p>" + 
                         "<ul>";
-
+    var query = place.place_name + ", " + place.admin_name1;
+    var content = "";
     var parameters = {
-        geo: place.postal_code
-    };
-    
-  //  alert(getNews());
-    var string = getNews(parameters);
-    if(string !== "") contentString += string;
-    else 
-    {
-        parameters.geo = place.place_name;
-        string = getNews(parameters);
-        if(string !== "") contentString += string;
-    }
+         geo: query
+     };
+     $.getJSON("articles.php", parameters)
+     .done(function(data, textStatus, jqXHR) {
+  
+         // add new markers to map
+         for (var i = 0; i < data.length; i++)
+         {
+             contentString = contentString +  "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
+         }
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+ 
+          // log error to browser's console
+          console.log(errorThrown.toString());
+      });
+      console.log(contentString);
+/*      if (content == "")
+      {
+          query = place.admin_name1;
+          parameters.geo = query;
+          $.getJSON("articles.php", parameters)
+          .done(function(data, textStatus, jqXHR) {
+  
+            // add new markers to map
+            for (var i = 0; i < data.length; i++)
+            {
+                content += "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
+            }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+ 
+            // log error to browser's console
+            console.log(errorThrown.toString());
+        });
+      }*/
      
+   // contentString += content;
     contentString += "</ul>";
     // remove previous info window if any
     info.close();
