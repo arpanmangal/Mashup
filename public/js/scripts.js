@@ -87,28 +87,24 @@ function addMarker(place)
     });
     
     var contentString = "<p style='background-color: #f0ffff'>" +
-                        "<span style='color: rgba(255, 153, 51, .8)'>" + place.place_name + ",</span> " +
-                        "<span style='color: rgba(0, 0, 128, .5)'>" + place.admin_name1 + "</span>  " + 
-                        "<span style='color: rgba(19, 136, 8, .34)'>" + place.postal_code + "</span></p>" + 
+                        "<span style='color: rgba(255, 153, 51)'>" + place.place_name + ",</span> " +
+                        "<span style='color: rgba(0, 0, 128)'>" + place.admin_name1 + "</span>  " + 
+                        "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p>" + 
                         "<ul>";
 
     var parameters = {
-        geo: place.place_name
+        geo: place.postal_code
     };
-    $.getJSON("articles.php", parameters)
-    .done(function(data, textStatus, jqXHR) {
-
-        // add new markers to map
-        for (var i = 0; i < data.length; i++)
-        {
-            contentString += "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
-        }
-     })
-     .fail(function(jqXHR, textStatus, errorThrown) {
-
-         // log error to browser's console
-         console.log(errorThrown.toString());
-     });
+    
+  //  alert(getNews());
+    var string = getNews(parameters);
+    if(string !== "") contentString += string;
+    else 
+    {
+        parameters.geo = place.place_name;
+        string = getNews(parameters);
+        if(string !== "") contentString += string;
+    }
      
     contentString += "</ul>";
     // remove previous info window if any
@@ -121,6 +117,33 @@ function addMarker(place)
   
     // push the marker to the global array
     markers.push(marker);
+}
+
+function getNews(parameters)
+{
+    alert(parameters.geo);
+ /*   var parameters = {
+        geo: 110001
+    };*/
+  //  alert(parameters.geo);
+    var string = "";
+    // search for corresponding news items
+    $.getJSON("articles.php", parameters)
+    .done(function(data, textStatus, jqXHR) {
+
+        for (var i = 0; i < data.length; i++)
+        {
+            string += "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
+        }
+     })
+     .fail(function(jqXHR, textStatus, errorThrown) {
+
+         // log error to browser's console
+         console.log(errorThrown.toString());
+     });
+     
+   //  alert(string);
+     return string;
 }
 
 /**
