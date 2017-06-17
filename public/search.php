@@ -7,7 +7,13 @@
 
     // TODO: search database for places matching $_GET["geo"], store in $places
     // query database for user
-    $rows = CS50::query("SELECT * FROM places WHERE postal_code LIKE ?", $_GET["geo"] . "%");
+  //  $rows = CS50::query("SELECT * FROM places WHERE postal_code LIKE ?", $_GET["geo"] . "%");
+        $rows = CS50::query("SELECT * FROM places 
+                             WHERE MATCH(postal_code, place_name, admin_name1) 
+                             AGAINST(? IN NATURAL LANGUAGE MODE)", $_GET["geo"]);
+                             
+                //             "SELECT * FROM places WHERE MATCH(postal_code, place_name) AGAINST (?)", $_GET["geo"]
+    
 
     // if we found a row
     if (count($rows) > 0)

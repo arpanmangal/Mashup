@@ -54,7 +54,7 @@ $(function() {
         maxZoom: 14,
         panControl: true,
         styles: styles,
-        zoom: 10,
+        zoom: 13,
         zoomControl: true
     };
 
