@@ -16,7 +16,9 @@ var map;
 var markers = [];
 
 // info window
-var info = new google.maps.InfoWindow();
+var info = new google.maps.InfoWindow({
+    content: "Coming shortly..."
+  });
 
 // execute when the DOM is fully loaded
 $(function() {
@@ -76,14 +78,54 @@ $(function() {
  */
 function addMarker(place)
 {
-    // TODO
+    // alert(place.place_name);
     var long = parseFloat(place.longitude);
     var lat = parseFloat(place.latitude);
+    var placeName = place.place_name;
     var marker = new google.maps.Marker({
         position: { lat: lat, lng: long },
         map: map,
         title: place.place_name
     });
+    
+ /*   var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+        '<div id="bodyContent">'+
+        '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+        'sandstone rock formation in the southern part of the '+
+        'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+        'south west of the nearest large town, Alice Springs; 450&#160;km '+
+        '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+        'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+        'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+        'Aboriginal people of the area. It has many springs, waterholes, '+
+        'rock caves and ancient paintings. Uluru is listed as a World '+
+        'Heritage Site.</p>'+
+        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+        'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+        '(last visited June 22, 2009).</p>'+
+        '</div>'+
+        '</div>';*/
+        
+        var contentString = "<p style='background-color: #f0ffff'>" +
+                                    "<span style='color: rgba(255, 153, 51, .8)'>" + placeName + ",</span> " +
+                                    "<span style='color: rgba(0, 0, 128, .5)'>" + place.admin_name1 + "</span>  " + 
+                                    "<span style='color: rgba(19, 136, 8, .34)'>" + place.postal_code + "</span></p>";
+
+    // remove previous info window if any
+    info = null;
+    
+    // insert new content into the info window
+    info = new google.maps.InfoWindow({
+        content: contentString
+    });
+  
+    marker.addListener('click', function() {
+        info.open(map, marker);
+    });
+  
     markers.push(marker);
 }
 
@@ -172,7 +214,6 @@ function hideInfo()
  */
 function removeMarkers()
 {
-    // TODO
     // Get the number of markers
     var length = markers.length;
     
