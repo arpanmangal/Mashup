@@ -91,11 +91,7 @@ function addMarker(place)
         title: place.place_name
     });
     
-    var contentString = "<p style='background-color: #f0ffff'>" +
-                        "<span style='color: rgba(255, 153, 51)'>" + place.place_name + ",</span> " +
-                        "<span style='color: rgba(0, 0, 128)'>" + place.admin_name1 + "</span>  " + 
-                        "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p>" + 
-                        "<ul>";
+    var contentString;
                         
     // remove previous info window if any
     info.close();
@@ -107,10 +103,15 @@ function addMarker(place)
         var parameters = {
             geo: query
         };
-     
+        
+        showInfo(marker, contentString);
         $.getJSON("articles.php", parameters)
         .done(function(data, textStatus, jqXHR) {
-  
+            contentString = "<p style='background-color: #f0ffff'>" +
+                        "<span style='color: rgba(255, 153, 51)'>" + place.place_name + ",</span> " +
+                        "<span style='color: rgba(0, 0, 128)'>" + place.admin_name1 + "</span>  " + 
+                        "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p>";
+            contentString += "</ul>";
             // add new markers to map
             for (var i = 0; i < data.length; i++)
             {
@@ -121,10 +122,31 @@ function addMarker(place)
  
             // log error to browser's console
             console.log(errorThrown.toString());
-        });
-     
-        contentString += "</ul>";
+        })
+        .always(function() { 
+        //    alert('getJSON request ended!');
+            contentString += "</ul>";
         showInfo(marker, contentString);
+            
+        });
+        
+ /*       $.ajax({
+                 url: "articles.php",
+                 data: { 
+                  geo: query
+                 },
+                 success: function(data) {
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        contentString +=  "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
+                    }
+                }
+            });*/
+     
+     
+     
+ //       contentString += "</ul>";
+   //     showInfo(marker, contentString);
     });
   
     // push the marker to the global array
