@@ -56,7 +56,7 @@ $(function() {
         maxZoom: 14,
         panControl: true,
         styles: styles,
-        zoom: 13,
+        zoom: 12,
         zoomControl: true
     };
 
@@ -80,9 +80,14 @@ function addMarker(place)
 {
     var long = parseFloat(place.longitude);
     var lat = parseFloat(place.latitude);
+    
+    // image credit: https://mapicons.mapsmarker.com/
+    var image = "img/reading.png";
+    
     var marker = new google.maps.Marker({
         position: { lat: lat, lng: long },
         map: map,
+        icon: image,
         title: place.place_name
     });
     
@@ -91,37 +96,25 @@ function addMarker(place)
                         "<span style='color: rgba(0, 0, 128)'>" + place.admin_name1 + "</span>  " + 
                         "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p>" + 
                         "<ul>";
-    var query = place.place_name + ", " + place.admin_name1;
-    var content = "";
-    var parameters = {
-         geo: query
-     };
-     $.getJSON("articles.php", parameters)
-     .done(function(data, textStatus, jqXHR) {
-  
-         // add new markers to map
-         for (var i = 0; i < data.length; i++)
-         {
-             contentString = contentString +  "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
-         }
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
+                        
+    // remove previous info window if any
+    info.close();
  
-          // log error to browser's console
-          console.log(errorThrown.toString());
-      });
-      console.log(contentString);
-/*      if (content == "")
-      {
-          query = place.admin_name1;
-          parameters.geo = query;
-          $.getJSON("articles.php", parameters)
-          .done(function(data, textStatus, jqXHR) {
+    // listen for click to open the info window
+    marker.addListener('click', function() {
+        // check the news only when asked for it
+        var query = place.place_name + ", " + place.admin_name1;
+        var parameters = {
+            geo: query
+        };
+     
+        $.getJSON("articles.php", parameters)
+        .done(function(data, textStatus, jqXHR) {
   
             // add new markers to map
             for (var i = 0; i < data.length; i++)
             {
-                content += "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
+                contentString +=  "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
             }
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
@@ -129,15 +122,8 @@ function addMarker(place)
             // log error to browser's console
             console.log(errorThrown.toString());
         });
-      }*/
      
-   // contentString += content;
-    contentString += "</ul>";
-    // remove previous info window if any
-    info.close();
- 
-    // listen for click to open the info window
-    marker.addListener('click', function() {
+        contentString += "</ul>";
         showInfo(marker, contentString);
     });
   
@@ -145,32 +131,6 @@ function addMarker(place)
     markers.push(marker);
 }
 
-function getNews(parameters)
-{
-    alert(parameters.geo);
- /*   var parameters = {
-        geo: 110001
-    };*/
-  //  alert(parameters.geo);
-    var string = "";
-    // search for corresponding news items
-    $.getJSON("articles.php", parameters)
-    .done(function(data, textStatus, jqXHR) {
-
-        for (var i = 0; i < data.length; i++)
-        {
-            string += "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
-        }
-     })
-     .fail(function(jqXHR, textStatus, errorThrown) {
-
-         // log error to browser's console
-         console.log(errorThrown.toString());
-     });
-     
-   //  alert(string);
-     return string;
-}
 
 /**
  * Configures application.
