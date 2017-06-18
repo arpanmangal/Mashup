@@ -97,8 +97,8 @@ function addMarker(place)
         labelContent: markerLabel,
         labelAnchor: new google.maps.Point(22, 0),
         labelClass: "label", // the CSS class for the label 
-        labelStyle: {opacity: 0.75}
- //       title: place.place_name
+        labelStyle: {opacity: 0.75},
+        title: place.place_name
     });
     
     var contentString;
@@ -126,20 +126,16 @@ function addMarker(place)
         $.getJSON("articles.php", parameters)
         .done(function(data, textStatus, jqXHR) {
             // when done update the info window
-            contentString = "<div class='infoTitle'><p>" +
-                        "<span style='color: rgba(255, 153, 51)'>" + place.place_name + ",</span> " +
-                        "<span style='color: rgba(0, 0, 128)'>" + place.admin_name1 + "</span>  " + 
-                        "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p></div>" +
+            contentString = "<center><p style='background-color: #f0ffff; font-weight :bold;'>" +
+                        "<span style='color: rgba(255, 153, 51); font-size: 17px;'>" + place.place_name + ",</span> " +
+                        "<span style='color: rgba(0, 0, 128); font-size: 17px;'>" + place.admin_name1 + "</span>  " + 
+                        "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> (" + place.postal_code + ")</span></p></center>" +
                         "<ul>";
-                        
-    /****************************************************************************************************************************/
-  
-    /******************************************************************************************************************************/
                         
             // add the news items in the list            
             for (var i = 0; i < data.length; i++)
             {
-                contentString +=  "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
+                contentString +=  "<li><a class='sd after' href='" + data[i].link + "'>" + data[i].title + "</a></li>";
             }
             
             // if no news item found
@@ -147,6 +143,7 @@ function addMarker(place)
             {
                 contentString +=  "<li>No News Today..</li>";
             }
+            
         })
         
         .fail(function(jqXHR, textStatus, errorThrown) {
@@ -157,10 +154,14 @@ function addMarker(place)
         .always(function() {
             // when the request is completed show the required info window
             contentString += "</ul>";
+            // Let user search Google for news
+            contentString += "<div id='searchNews' align='right'><a href='https://news.google.com/news/section?geo=" + query + "'><br />  <img src='img/google.jpg' /></a></div>";
             showInfo(marker, contentString);
         });
     });
   
+  
+
     // push the marker to the global array
     markers.push(marker);
 }
@@ -299,7 +300,7 @@ function showInfo(marker, content)
     if (typeof(content) === "undefined")
     {
         // http://www.ajaxload.info/
-        div += "<img alt='loading' src='img/ajax-loader.gif'/>";
+        div += "<center><img alt='loading' src='img/Loading.gif'/><center>";
     }
     else
     {
