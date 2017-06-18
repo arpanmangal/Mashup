@@ -53,10 +53,10 @@ $(function() {
         center: {lat: 28.644800, lng: 77.216721}, // New Delhi
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        maxZoom: 14,
+        maxZoom: 15,
         panControl: true,
         styles: styles,
-        zoom: 12,
+        zoom: 13,
         zoomControl: true
     };
 
@@ -78,23 +78,38 @@ $(function() {
  */
 function addMarker(place)
 {
+    // get the position of the place
     var long = parseFloat(place.longitude);
     var lat = parseFloat(place.latitude);
     
     // image credit: https://mapicons.mapsmarker.com/
-    var image = "img/reading.png";
+    var image = "img/Reading.png";
     
-    var marker = new google.maps.Marker({
+    
+    // marker Label
+    var markerLabel = "<p>" + place.place_name + ", " +
+                        place.admin_name1 + "</p>  ";
+    // create marker at 'place'
+    var marker = new MarkerWithLabel({
         position: { lat: lat, lng: long },
         map: map,
         icon: image,
-        title: place.place_name
+        labelContent: markerLabel,
+        labelAnchor: new google.maps.Point(22, 0),
+        labelClass: "label", // the CSS class for the label 
+        labelStyle: {opacity: 0.75}
+ //       title: place.place_name
     });
     
     var contentString;
                         
     // remove previous info window if any
-    info.close();
+    hideInfo();
+    
+    // listen for click elsewhere
+    google.maps.event.addListener(map, 'click', function() {
+        hideInfo();
+    });
  
     // listen for click to open the info window
     marker.addListener('click', function() {
@@ -104,54 +119,52 @@ function addMarker(place)
             geo: query
         };
         
+        // show the current info i.e. Loading...
         showInfo(marker, contentString);
+        
+        // Get the actual info
         $.getJSON("articles.php", parameters)
         .done(function(data, textStatus, jqXHR) {
-            contentString = "<p style='background-color: #f0ffff'>" +
+            // when done update the info window
+            contentString = "<div class='infoTitle'><p>" +
                         "<span style='color: rgba(255, 153, 51)'>" + place.place_name + ",</span> " +
                         "<span style='color: rgba(0, 0, 128)'>" + place.admin_name1 + "</span>  " + 
-                        "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p>";
-            contentString += "</ul>";
-            // add new markers to map
+                        "<span style='color: rgba(19, 136, 8)'>" + place.postal_code + "</span></p></div>" +
+                        "<ul>";
+                        
+    /****************************************************************************************************************************/
+  
+    /******************************************************************************************************************************/
+                        
+            // add the news items in the list            
             for (var i = 0; i < data.length; i++)
             {
                 contentString +=  "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
             }
+            
+            // if no news item found
+            if (!data.length)
+            {
+                contentString +=  "<li>No News Today..</li>";
+            }
         })
+        
         .fail(function(jqXHR, textStatus, errorThrown) {
- 
             // log error to browser's console
             console.log(errorThrown.toString());
         })
-        .always(function() { 
-        //    alert('getJSON request ended!');
-            contentString += "</ul>";
-        showInfo(marker, contentString);
-            
-        });
         
- /*       $.ajax({
-                 url: "articles.php",
-                 data: { 
-                  geo: query
-                 },
-                 success: function(data) {
-                    for (var i = 0; i < data.length; i++)
-                    {
-                        contentString +=  "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
-                    }
-                }
-            });*/
-     
-     
-     
- //       contentString += "</ul>";
-   //     showInfo(marker, contentString);
+        .always(function() {
+            // when the request is completed show the required info window
+            contentString += "</ul>";
+            showInfo(marker, contentString);
+        });
     });
   
     // push the marker to the global array
     markers.push(marker);
 }
+
 
 
 /**
@@ -201,6 +214,7 @@ function configure()
 
         // set map's center
         map.setCenter({lat: latitude, lng: longitude});
+        map.setZoom(13);
 
         // update UI
         update();
