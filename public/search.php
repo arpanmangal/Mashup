@@ -8,10 +8,16 @@
     // search database for places matching $_GET["geo"], store in $places
     // https://stackoverflow.com/a/13225184/7116413
     $split_strings = preg_split('/[\ \n\,]+/', $_GET["geo"]);
-    print($split_strings[0]);
+    print($split_strings[1]);
+    $search_string = "'";
+    foreach($split_strings as $find)
+    {
+        $search_string = $search_string."+".$find." ";
+    }
+    $search_string = $search_string."'";
     // query database for user
     $rows = CS50::query("SELECT * FROM places WHERE MATCH (postal_code, admin_name1, place_name) 
-                         AGAINST (+'".$split_strings[0]."' IN BOOLEAN MODE)");
+                         AGAINST (".$search_string." IN BOOLEAN MODE)");
                          
 
     // if we found a row
