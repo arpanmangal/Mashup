@@ -87,7 +87,7 @@
     
     // Make it searchable
     CS50::query('ALTER TABLE places 
-                 ADD FULLTEXT(postal_code, place_name, admin_name1);');
+                 ADD FULLTEXT(postal_code, admin_name1, place_name);');
                              
     // close the file
     fclose($handle);

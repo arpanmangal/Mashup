@@ -5,12 +5,13 @@
     // numerically indexed array of places
     $places = [];
 
-    // TODO: search database for places matching $_GET["geo"], store in $places
+    // search database for places matching $_GET["geo"], store in $places
+    // https://stackoverflow.com/a/13225184/7116413
+    $split_strings = preg_split('/[\ \n\,]+/', $_GET["geo"]);
+    print($split_strings[0]);
     // query database for user
-    //  $rows = CS50::query("SELECT * FROM places WHERE postal_code LIKE ?", $_GET["geo"] . "%");
-    $rows = CS50::query("SELECT * FROM places 
-                         WHERE MATCH(postal_code, place_name, admin_name1) 
-                         AGAINST(? IN NATURAL LANGUAGE MODE)", $_GET["geo"]);
+    $rows = CS50::query("SELECT * FROM places WHERE MATCH (postal_code, admin_name1, place_name) 
+                         AGAINST (+'".$split_strings[0]."' IN BOOLEAN MODE)");
                          
 
     // if we found a row
