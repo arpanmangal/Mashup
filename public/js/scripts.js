@@ -68,8 +68,8 @@ $(function() {
     // instantiate map
     map = new google.maps.Map(canvas, options);
     
-    // Try HTML5 geolocation.
-        if (navigator.geolocation) {
+    // Get present location
+  /*      if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
               lat: position.coords.latitude,
@@ -80,7 +80,7 @@ $(function() {
           });
           // update the new location
     //      update();
-        }
+        }*/
           
     // configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
