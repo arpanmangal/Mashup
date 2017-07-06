@@ -239,6 +239,7 @@ a.before:hover:before,a.after:hover:after{
 .next {
   cursor: pointer;
   position: absolute;
+  z-index: 150;
   top: 50%;
   width: auto;
   padding: 16px;

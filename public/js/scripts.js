@@ -390,6 +390,7 @@ var slideIndex = 1;
 showSlides(slideIndex);
 
 function plusSlides(n) {
+  //  console.log(n);
   showSlides(slideIndex += n);
 }
 
@@ -411,6 +412,7 @@ function showSlides(n) {
       dots[i].className = dots[i].className.replace(" active", "");
   }
   slides[slideIndex-1].style.display = "block";
+  console.log(slideIndex-1);
   dots[slideIndex-1].className += " active";
   captionText.innerHTML = dots[slideIndex-1].alt;
 }
