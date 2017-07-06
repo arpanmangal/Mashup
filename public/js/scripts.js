@@ -137,6 +137,9 @@ function addMarker(place)
             geo: query
         };
         
+        // close previous info window
+        hideInfo();
+        
         // show the current info i.e. Loading...
         showInfo(marker, contentString);
         
@@ -151,16 +154,21 @@ function addMarker(place)
             }*/
             
             // empty the previous model-content class
-            $('.modal-content').html('');
-            
+            $('.slides').html('');
             // when done update the info window
             contentString = "<center><a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'>" + 
                         "<p style='background-color: #f0ffff; font-weight :bold;'>" +
                         "<span style='color: rgba(255, 153, 51, 1); font-size: 17px;'>" + place.place_name + ",</span> " +
                         "<span style='color: rgba(0, 0, 128, 1); font-size: 17px;'>" + place.admin_name1 + "</span></a>  " + 
-                        "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> (" + place.postal_code + ")</span></p></center>" +
-                        "<ul>";
-                        
+                        "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> (" + place.postal_code + ")</span></p></center>";
+               
+            $('.slides')
+                .append(
+                    $(contentString)   
+                );
+                
+            contentString += "<ul>"; 
+                
             // add the news items in the list            
             for (var i = 0; i < data.length; i++)
             {
@@ -171,10 +179,14 @@ function addMarker(place)
                 };*/
                 var currentSlide = i + 1;
                 //contentString +=  "<li><a class='sd after' href='" + data[i].link + "' target='_blank' title='Read the Story'>" + data[i].title + "</a></li>";
-                contentString +=  "<li><a class='sd after' onclick='openModal();currentSlide("+currentSlide+")' title='Read the Story'>" + data[i].title + "</a></li>";
+                contentString +=   "<li><span><a class='sd after' onclick='openModal();currentSlide("+currentSlide+")' title='See the Story'>" + data[i].title + "</a></span>"
+                                  + "<span><a class='sd after' style='color: blue' href='" + data[i].link + "' target='_blank' title='Read full Story'>   &#8688;</a></span></li>";
+                
+                // check if image is available for the news
+                var image = (data[i].image == null) ? "../img/blank.png" : data[i].image; 
                 
                 // append the corresponding slides
-                $('.modal-content')
+                $('.slides')
                     .append(
                         $('<div>').addClass('mySlides')
                             .append(
@@ -182,10 +194,14 @@ function addMarker(place)
                                     .html(i + 1 + " / " + data.length)
                             )
                             .append(
-                                $('<div>').addClass('title')
+                                $('<div>').addClass('storyTitle')
                                     .html(data[i].title)
                             )
-                            .append("<img id='theImg' src='" + data[i].image+"'/>")
+                            .append("<img id='storyImg' src='" + image+"'/>")
+                            .append(
+                                $('<p>').addClass('story')
+                                    .html(data[i].story)
+                            )
                         );
             }
             
@@ -300,6 +316,7 @@ function configure()
  */
 function hideInfo()
 {
+    closeModal();
     info.close();
 }
 
