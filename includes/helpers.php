@@ -47,10 +47,17 @@
                 // iterate over items in channel
                 foreach ($rss->channel->item as $item)
                 {
+                    // credits: https://stackoverflow.com/a/6513909/7116413 and https://stackoverflow.com/a/2180298/7116413
+                    preg_match('/< *img[^>]*src *= *["\']?([^"\']*)/i', $item->description, $match);
+                    $parts = explode('<font size="-1">', $item->description);
+    
                     // add article to array
                     $articles[] = [
                         "link" => (string) $item->link,
-                        "title" => (string) $item->title
+                        "title" => (string) $item->title,
+                        "image" => @$match[1],
+                        "site_title" => strip_tags($parts[1]),
+                        "story" => strip_tags($parts[2])
                     ];
                 }
 
