@@ -155,7 +155,8 @@ function addMarker(place)
             // add the news items in the list            
             for (var i = 0; i < data.length; i++)
             {
-                contentString +=  "<li><a class='sd after' href='" + data[i].link + "' target='_blank' title='Read the Story'>" + data[i].title + "</a></li>";
+                //contentString +=  "<li><a class='sd after' href='" + data[i].link + "' target='_blank' title='Read the Story'>" + data[i].title + "</a></li>";
+                contentString +=  "<li><a class='sd after' onclick='openModal();currentSlide(4)' title='Read the Story'>" + data[i].title + "</a></li>";
             }
             
             // if no news item found
@@ -371,4 +372,45 @@ function update()
          // log error to browser's console
          console.log(errorThrown.toString());
      });
+}
+
+
+/**
+ * LightBox for News
+ */
+function openModal() {
+  document.getElementById('myModal').style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById('myModal').style.display = "none";
+}
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
 }
