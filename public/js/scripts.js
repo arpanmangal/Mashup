@@ -143,6 +143,15 @@ function addMarker(place)
         // Get the actual info
         $.getJSON("articles.php", parameters)
         .done(function(data, textStatus, jqXHR) {
+            // function for model
+       /*     function serveModel(data) {
+                console.log(data);
+                openModal();
+                currentSlide(4);
+            }*/
+            
+            // empty the previous model-content class
+            $('.modal-content').html('');
             
             // when done update the info window
             contentString = "<center><a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'>" + 
@@ -155,8 +164,29 @@ function addMarker(place)
             // add the news items in the list            
             for (var i = 0; i < data.length; i++)
             {
+                /*var data = {
+                    placeName: place.place_name,
+                    adminName: place.admin_name1,
+                    title: data[i].title
+                };*/
+                var currentSlide = i + 1;
                 //contentString +=  "<li><a class='sd after' href='" + data[i].link + "' target='_blank' title='Read the Story'>" + data[i].title + "</a></li>";
-                contentString +=  "<li><a class='sd after' onclick='openModal();currentSlide(4)' title='Read the Story'>" + data[i].title + "</a></li>";
+                contentString +=  "<li><a class='sd after' onclick='openModal();currentSlide("+currentSlide+")' title='Read the Story'>" + data[i].title + "</a></li>";
+                
+                // append the corresponding slides
+                $('.modal-content')
+                    .append(
+                        $('<div>').addClass('mySlides')
+                            .append(
+                                $('<div>').addClass('numbertext')
+                                    .html(i + 1 + " / " + data.length)
+                            )
+                            .append(
+                                $('<div>').addClass('title')
+                                    .html(data[i].title)
+                            )
+                            .append("<img id='theImg' src='" + data[i].image+"'/>")
+                        );
             }
             
             // if no news item found
@@ -164,6 +194,8 @@ function addMarker(place)
             {
                 contentString +=  "<li>No News Today..</li>";
             }
+            
+            
             
         })
         
@@ -379,6 +411,7 @@ function update()
  * LightBox for News
  */
 function openModal() {
+    console.log();
   document.getElementById('myModal').style.display = "block";
 }
 

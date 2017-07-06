@@ -206,7 +206,7 @@ a.before:hover:before,a.after:hover:after{
   margin: auto;
   padding: 0;
   width: 90%;
-  max-width: 1200px;
+  max-width: 800px;
 }
 
 /* The Close Button */
