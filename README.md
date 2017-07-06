@@ -6,4 +6,12 @@ Get instant news of your current location, favourite place or hometown with our 
 <br />
 Don't like the congested list?<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We also provide for Google News in its original state just on the click of one button<br /><br />
-Added to this is the feature of knowing more about the place by clicking the name directly<br />
+Added to this is the feature of knowing more about the place by clicking the name directly<br /><br />
+
+To run in cs50 ide:
+```sh
+    $ cd ~/workspace/pset8_Mashup/public
+    $ apache50 start .
+    $ mysql50 start
+ ```
+ - Now head to https://ide50-arpanmangal.cs50.io/ and get instant news! 
