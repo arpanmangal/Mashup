@@ -40,10 +40,16 @@ html, body, #map-canvas, .container-fluid
 #q
 {
     /* override typeahead.js's transparent background */
-    background-color: #ffffff !important;
+    background-color: #eafeea !important;
 
+    /* Search icon in the search box */
+    background-image:url(../img/search.jpg); 
+    background-repeat: no-repeat; 
+    background-position: 5px 6px;
+    
     /* text box's width */
     width: 300px;
+    padding-left: 20px;
 }
 
 /* stylize places' labels */
