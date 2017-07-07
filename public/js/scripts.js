@@ -154,6 +154,7 @@ function addMarker(place)
             }*/
             
             // empty the previous model-content class
+            $('.modalHeader').html('');
             $('.slides').html('');
             // when done update the info window
             contentString = "<center><a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'>" + 
@@ -189,18 +190,21 @@ function addMarker(place)
                 $('.slides')
                     .append(
                         $('<div>').addClass('mySlides')
-                            .append(
+                            /*.append(
                                 $('<div>').addClass('numbertext')
                                     .html(i + 1 + " / " + data.length)
-                            )
+                            )*/
                             .append(
                                 $('<div>').addClass('storyTitle')
                                     .html(data[i].title)
                             )
-                            .append("<img id='storyImg' class='left' src='" + image+"'/>")
                             .append(
-                                $('<p>').addClass('story right')
-                                    .html(data[i].story)
+                                $('<div>')
+                                .append("<figure id='storyImg' class='left'><img  src='" + image+"'/></figure>")
+                                .append(
+                                    $('<p>').addClass('story right')
+                                        .html(data[i].story)
+                                )
                             )
                         );
             }

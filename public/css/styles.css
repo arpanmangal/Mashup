@@ -191,6 +191,10 @@ a.before:hover:before,a.after:hover:after{
   margin-left: -400px;
 }
 
+.modalHeader {
+  width: 100%;
+}
+
 .left {
   float: left;
 }
@@ -202,25 +206,42 @@ a.before:hover:before,a.after:hover:after{
 .slides {
   float: none;
   background-color: yellow;
+  margin-left: auto;
+  margin-right: auto;
   width: 80%;
+  height: 400px;
 }
 
 .storyTitle {
     text-align: center;
     color: green;
     margin: 10px;
-    margin-left: 10%;
+    /*margin-left: 10%;*/
+    width: 100%;
+    height: 100px;
+    background-color: 20%;
 }
 
 .storyImg {
-    float: left;
-    max-width: 30%;
-    width: 120px;
+    /*float: left;*/
+    margin: 0;
+    width: 30%;
+    height: 80%;
+    vertical-align: middle;
+
+    /*margin: auto;*/
+    
 }
 
 .story {
+  margin: 0;
     width: 70%;
+    height: 80%;
+    padding-left: 5%;
+    padding-right: 5%;
     float: right;
+    text-align: center;
+    
 }
 /* The Close Button */
 .close {
@@ -257,6 +278,7 @@ a.before:hover:before,a.after:hover:after{
   width: auto;
   padding: 16px;
   margin-top: -50px;
+  vertical-align: middle;
   color: white;
   font-weight: bold;
   font-size: 20px;
@@ -282,24 +304,11 @@ a.before:hover:before,a.after:hover:after{
 .numbertext {
   color: #f2f2f2;
   font-size: 12px;
-  
+  float: left;
   padding: 8px 12px;
   position: relative;
   top: 0;
 }
-
-img {
-  margin-bottom: -4px;
-}
-
-.caption-container {
-  text-align: center;
-  background-color: black;
-  padding: 2px 16px;
-  color: white;
-}
-
-
 
 img.hover-shadow {
   transition: 0.3s
