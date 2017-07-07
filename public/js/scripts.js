@@ -162,9 +162,9 @@ function addMarker(place)
                         "<span style='color: rgba(0, 0, 128, 1); font-size: 17px;'>" + place.admin_name1 + "</span></a>  " + 
                         "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> (" + place.postal_code + ")</span></p></center>";
                
-            $('.slides')
+            $('.modalHeader')
                 .append(
-                    $(contentString)   
+                    $('<div>' + contentString + '</div>')   
                 );
                 
             contentString += "<ul>"; 
@@ -197,9 +197,9 @@ function addMarker(place)
                                 $('<div>').addClass('storyTitle')
                                     .html(data[i].title)
                             )
-                            .append("<img id='storyImg' src='" + image+"'/>")
+                            .append("<img id='storyImg' class='left' src='" + image+"'/>")
                             .append(
-                                $('<p>').addClass('story')
+                                $('<p>').addClass('story right')
                                     .html(data[i].story)
                             )
                         );
@@ -451,18 +451,11 @@ function currentSlide(n) {
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  var captionText = document.getElementById("caption");
   if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";
   }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
   slides[slideIndex-1].style.display = "block";
   console.log(slideIndex-1);
-  dots[slideIndex-1].className += " active";
-  captionText.innerHTML = dots[slideIndex-1].alt;
 }

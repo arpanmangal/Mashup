@@ -170,45 +170,40 @@ a.before:hover:before,a.after:hover:after{
 
 
 /* LightBox for News https://www.w3schools.com/howto/howto_js_lightbox.asp*/
-.row > .column {
-  padding: 0 8px;
-}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.column {
-  float: left;
-  width: 25%;
-}
 
 /* The Modal (background) */
-.modal {
+#myModal {
   display: none;
-  position: fixed;
-  z-index: 1;
-  padding-top: 100px;
-  left: 0;
-  top: 0;
-  width: 60%;
-  height: 60%;
+  position: absolute;
   overflow: auto;
-  background-color: black;
 }
 
 /* Modal Content */
-.modal-content {
+#modal-content {
   position: relative;
-  background-color: #fefefe;
+  background-color: #fe0000;
   margin: auto;
   padding: 0;
+  left: 50%;
+  top: 50%;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
+  margin-left: -400px;
 }
 
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.slides {
+  float: none;
+  background-color: yellow;
+  width: 80%;
+}
 
 .storyTitle {
     text-align: center;
@@ -287,8 +282,9 @@ a.before:hover:before,a.after:hover:after{
 .numbertext {
   color: #f2f2f2;
   font-size: 12px;
+  
   padding: 8px 12px;
-  position: absolute;
+  position: relative;
   top: 0;
 }
 
@@ -303,14 +299,7 @@ img {
   color: white;
 }
 
-.demo {
-  opacity: 0.6;
-}
 
-.active,
-.demo:hover {
-  opacity: 1;
-}
 
 img.hover-shadow {
   transition: 0.3s
