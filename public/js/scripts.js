@@ -163,8 +163,8 @@ function addMarker(place)
                         "<span style='color: rgba(0, 0, 128, 1); font-size: 17px;'>" + place.admin_name1 + "</span></a>  " + 
                         "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> (" + place.postal_code + ")</span></p></center>";
                
-            var modalHeading = "<a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'><h3>" + 
-                                place.place_name + ", " + place.admin_name1 + "</h3></a>";
+            var modalHeading = "<a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'><h4>" + 
+                                place.place_name + ", " + place.admin_name1 + ": </h4></a>";
             $('#modalHeading')
                 .append(
                     $(modalHeading)   
@@ -192,17 +192,18 @@ function addMarker(place)
                 $('.slides')
                     .append(
                         $('<div>').addClass('mySlides')
-                            /*.append(
+                            .append(
                                 $('<div>').addClass('numbertext')
                                     .html(i + 1 + " / " + data.length)
-                            )*/
+                            )
                             .append(
                                 $('<div>').addClass('storyTitle')
                                     .html("<h3><a class='sd after' style='color: blue' href='" + data[i].link + "' target='_blank' title='Read full Story'>" + data[i].title + "</a></h3>")
                             )
                             .append(
                                 $('<div>')
-                                .append("<figure id='storyImg' class='left'><img  src='" + image+"'/></figure>")
+                                .append("<figure id='storyImg' class='left'><a class='sd after' style='color: blue' href='" + data[i].link + "' target='_blank' title='Read full Story'>" +
+                                        "<div class='gradient'><img  src='" + image+"'/></div></a></figure>")
                                 .append(
                                     $('<p>').addClass('story right')
                                         .html(data[i].story)
@@ -432,6 +433,7 @@ function update()
 
 /**
  * LightBox for News
+ * https://www.w3schools.com/howto/howto_js_lightbox.asp
  */
 function openModal() {
     console.log();
