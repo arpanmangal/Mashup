@@ -192,7 +192,14 @@ a.before:hover:before,a.after:hover:after{
 }
 
 .modalHeader {
+  position: relative;
+  background-color: blue;
   width: 100%;
+}
+
+#modalHeading {
+  text-align: center;
+  vertical-align: middle;
 }
 
 .left {
@@ -245,7 +252,7 @@ a.before:hover:before,a.after:hover:after{
 }
 /* The Close Button */
 .close {
-  color: white;
+  color: black;
   position: absolute;
   top: 10px;
   right: 25px;

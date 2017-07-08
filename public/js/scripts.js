@@ -154,7 +154,7 @@ function addMarker(place)
             }*/
             
             // empty the previous model-content class
-            $('.modalHeader').html('');
+            $('#modalHeading').html('');
             $('.slides').html('');
             // when done update the info window
             contentString = "<center><a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'>" + 
@@ -163,9 +163,11 @@ function addMarker(place)
                         "<span style='color: rgba(0, 0, 128, 1); font-size: 17px;'>" + place.admin_name1 + "</span></a>  " + 
                         "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> (" + place.postal_code + ")</span></p></center>";
                
-            $('.modalHeader')
+            var modalHeading = "<a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'><h3>" + 
+                                place.place_name + ", " + place.admin_name1 + "</h3></a>";
+            $('#modalHeading')
                 .append(
-                    $('<div>' + contentString + '</div>')   
+                    $(modalHeading)   
                 );
                 
             contentString += "<ul>"; 
@@ -196,7 +198,7 @@ function addMarker(place)
                             )*/
                             .append(
                                 $('<div>').addClass('storyTitle')
-                                    .html(data[i].title)
+                                    .html("<h3><a class='sd after' style='color: blue' href='" + data[i].link + "' target='_blank' title='Read full Story'>" + data[i].title + "</a></h3>")
                             )
                             .append(
                                 $('<div>')
