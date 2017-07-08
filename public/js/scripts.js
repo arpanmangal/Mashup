@@ -68,6 +68,7 @@ $(function() {
     // instantiate map
     map = new google.maps.Map(canvas, options);
     
+    
     // Get present location
   /*      if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -158,10 +159,10 @@ function addMarker(place)
             $('.slides').html('');
             // when done update the info window
             contentString = "<center><a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'>" + 
-                        "<p style='background-color: #f0ffff; font-weight :bold;'>" +
-                        "<span style='color: rgba(255, 153, 51, 1); font-size: 17px;'>" + place.place_name + ",</span> " +
-                        "<span style='color: rgba(0, 0, 128, 1); font-size: 17px;'>" + place.admin_name1 + "</span></a>  " + 
-                        "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> (" + place.postal_code + ")</span></p></center>";
+                        "<p style='background-color: #f0ffff; font-weight: bold;'>" +
+                        "<span style='color: rgba(255, 153, 51, 1); font-size: 19px;'>" + place.place_name + ", </span> " +
+                        "<span style='color: rgba(0, 0, 128, 1); font-size: 21px;'>" + place.admin_name1 + "</span></a>  " + 
+                        "<span style='color: rgba(19, 136, 8, 0.5); font-size: 17px; font-weight: lighter'> &nbsp;&nbsp;(" + place.postal_code + ")</span></p></center>";
                
             var modalHeading = "<a href='https://www.google.co.in/search?q=" + query + "' target='_blank' title='Find out more...'><h4>" + 
                                 place.place_name + ", " + place.admin_name1 + ": </h4></a>";

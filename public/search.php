@@ -11,7 +11,7 @@
     $search_string = "'";
     foreach($split_strings as $find)
     {
-        $search_string = $search_string."+".$find." ";
+        $search_string = $search_string."+".$find."* ";
     }
     $search_string = $search_string."'";
     
