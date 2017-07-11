@@ -358,29 +358,18 @@ function search(query, cb)
         geo: query
     };
     // abort previous request https://stackoverflow.com/a/2765646/7116413
-    /*if (request != 'undefined') */request.abort();
+    request.abort();
     request = $.getJSON("search.php", parameters)
     .done(function(data, textStatus, jqXHR) {
 
         // call typeahead's callback with search results (i.e., places)
-        console.log(query + "search completed");
         cb(data);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
 
         // log error to browser's console
         console.log(errorThrown.toString());
-    })
-    /*.always(function() {
-        cb([
-                {
-                    "place_name": "hello",
-                    "admin_name1": "hi",
-                    "postal_code": "not good"
-                }
-           ]
-        );
-    })*/;
+    });
 }
 
 /**
@@ -441,7 +430,8 @@ function update()
      .fail(function(jqXHR, textStatus, errorThrown) {
 
          // log error to browser's console
-         console.log(errorThrown.toString());
+         if (errorThrown.toString() != "abort")
+            console.log(errorThrown.toString());
      });
 }
 
@@ -477,8 +467,9 @@ function showSlides(n) {
   if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+      if (i == slideIndex - 1) slides[i].style.display = "block";
+      else slides[i].style.display = "none";
   }
-  slides[slideIndex-1].style.display = "block";
-  console.log(slideIndex-1);
+  //slides[slideIndex-1].style.display = "block";
+  //console.log(slideIndex-1);
 }
