@@ -154,6 +154,8 @@ a.before:hover:before,a.after:hover:after{
     border-radius: 4px;
     margin-top: 1px;
     max-height: 150px;
+    /*min-height: 50px;
+    background-image: url("/img/ajax-loader.gif");*/
     overflow-y: auto;
     padding: 6px 12px;
     width: 300px;

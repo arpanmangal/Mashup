@@ -280,7 +280,7 @@ function configure()
             suggestion: _.template("<p style='background-color: #f0ffff'>" +
                                     "<span style='color: rgba(255, 153, 51, .8)'><%- place_name %>,</span> " +
                                     "<span style='color: rgba(0, 0, 128, .5)'><%- admin_name1 %></span>  " + 
-                                    "<span style='color: rgba(19, 136, 8, .34)'><%- postal_code %></span></p>")
+                                    "<span style='color: rgba(19, 136, 8, .34)'><%- postal_code %></span><br /></p>")
         }
     });
 
@@ -350,23 +350,37 @@ function removeMarkers()
 /**
  * Searches database for typeahead's suggestions.
  */
+ var request = $.getJSON("search.php", {geo: "default"});
 function search(query, cb)
 {
     // get places matching query (asynchronously)
     var parameters = {
         geo: query
     };
-    $.getJSON("search.php", parameters)
+    // abort previous request https://stackoverflow.com/a/2765646/7116413
+    /*if (request != 'undefined') */request.abort();
+    request = $.getJSON("search.php", parameters)
     .done(function(data, textStatus, jqXHR) {
 
         // call typeahead's callback with search results (i.e., places)
+        console.log(query + "search completed");
         cb(data);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
 
         // log error to browser's console
         console.log(errorThrown.toString());
-    });
+    })
+    /*.always(function() {
+        cb([
+                {
+                    "place_name": "hello",
+                    "admin_name1": "hi",
+                    "postal_code": "not good"
+                }
+           ]
+        );
+    })*/;
 }
 
 /**
